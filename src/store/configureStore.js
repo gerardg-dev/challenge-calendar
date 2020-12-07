@@ -1,6 +1,6 @@
 import { createStore } from "redux";
-import testReducer from "../sandbox/testReducer";
+import remindersReducer from "../reducers";
 
 export function configureStore() {
-  return createStore(testReducer);
+  return createStore(remindersReducer);
 }
