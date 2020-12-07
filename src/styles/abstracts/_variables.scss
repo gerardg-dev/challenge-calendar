@@ -1,0 +1,27 @@
+$color-black: black;
+$color-black-light: lighten($color-black, 10%);
+$color-black-dark: darken($color-black, 10%);
+
+$color-white: white;
+$color-white-light: lighten($color-white, 10%);
+$color-white-dark: darken($color-white, 10%);
+
+$color-gray: gray;
+$color-gray-light: lighten($color-gray, 10%);
+$color-gray-dark: darken($color-gray, 10%);
+
+$color-red: red;
+$color-red-light: lighten($color-red, 10%);
+$color-red-dark: darken($color-red, 10%);
+
+$color-blue: blue;
+$color-blue-light: lighten($color-blue, 10%);
+$color-blue-dark: darken($color-blue, 10%);
+
+$color-light-blue: lightblue;
+$color-light-blue-light: lighten($color-light-blue, 10%);
+$color-light-blue-dark: darken($color-light-blue, 10%);
+
+$color-green: green;
+$color-green-light: lighten($color-green, 10%);
+$color-green-dark: darken($color-green, 10%);

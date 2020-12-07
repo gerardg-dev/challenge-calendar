@@ -1,30 +1,19 @@
+import "../../styles/main.scss";
+
 const Body = ({ onChange, calendar, dayStyles, value }) => {
   return (
-    <div>
+    <div className="calendar-component__body">
       {calendar.map((week, weekIndex) => (
-        <div key={weekIndex} style={{ color: "gray", fontSize: "18px" }}>
+        <div key={weekIndex} className="calendar-component__week-box">
           {week.map((day, dayIndex) => (
             <div
               key={dayIndex}
-              style={{
-                border: "solid 1px lightGray",
-                position: "relative",
-                width: "calc(100% / 7)",
-                height: "80px",
-                display: "inline-block",
-                backgroundColor: "white",
-                padding: 0,
-                margin: 0,
-                boxSizing: "border-box",
-                zIndex: 1,
-                textAlign: "center",
-                color: "gray"
-              }}
+              className="calendar-component__day-box"
               onClick={() => {
                 onChange(day);
               }}
             >
-              <div style={dayStyles(day, value)}>
+              <div className={dayStyles(day, value)}>
                 {day.format("D").toString()}
               </div>
             </div>

@@ -5,6 +5,8 @@ import Header from "./Header";
 import Days from "./Days";
 import Body from "./Body";
 
+import "../../styles/main.scss";
+
 const Calendar = ({ value, onChange }) => {
   const [calendar, setCalendar] = useState([]);
 
@@ -25,12 +27,11 @@ const Calendar = ({ value, onChange }) => {
   }
 
   function dayStyles(day, value) {
-    if (beforeToday(day))
-      return { color: "lightGray", backgroundColor: "white" };
+    if (beforeToday(day)) return "calendar-component__day-box--before-today";
     if (isSelected(day, value))
-      return { color: "white", backgroundColor: "red" };
-    if (isToday(day)) return { color: "white", backgroundColor: "blue" };
-    return {};
+      return "calendar-component__day-box--is-selected";
+    if (isToday(day)) return "calendar-component__day-box--is-today";
+    return "";
   }
 
   function currMonthName() {
@@ -50,15 +51,7 @@ const Calendar = ({ value, onChange }) => {
   }
 
   return (
-    <div
-      style={{
-        border: "solid 4px lightGray",
-        width: "100%",
-        minWidth: "200px",
-        maxWidth: "600px",
-        margin: "10px"
-      }}
-    >
+    <div className="calendar-component__container">
       <Header
         onChange={onChange}
         currMonthName={currMonthName}
