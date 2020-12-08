@@ -6,6 +6,7 @@
     background-color: $color-white-dark;
     color: $color-gray-dark;
     max-width: 60rem !important;
+    text-align: center;
 
     &--horizontal {
       @include flexRowCenter;

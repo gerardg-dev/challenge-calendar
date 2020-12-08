@@ -1,7 +1,8 @@
-import { SELECT_DAY } from "../constants/ActionTypes";
+import { SELECT_DAY, CREATE_REMINDER } from "../constants/ActionTypes";
 
 const initialState = {
-  selectedDay: null
+  selectedDay: null,
+  remindersData: {}
 };
 
 export default function remindersReducer(state = initialState, action) {
@@ -10,6 +11,12 @@ export default function remindersReducer(state = initialState, action) {
       return {
         ...state,
         selectedDay: action.payload
+      };
+    }
+    case CREATE_REMINDER: {
+      return {
+        ...state,
+        remindersData: action.payload
       };
     }
     default:
