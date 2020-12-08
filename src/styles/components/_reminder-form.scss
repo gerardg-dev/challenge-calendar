@@ -1,0 +1,111 @@
+.reminder-form-component {
+  &__container {
+    border: solid 0.25rem $color-gray-dark !important;
+    font-size: $font-size-4 !important;
+    padding: 2rem !important;
+    background-color: $color-white-dark;
+    color: $color-gray-dark;
+
+    &--horizontal {
+      @include flexRowCenter;
+    }
+    &--vertical {
+      @include flexColumnCenter;
+    }
+    &--x-item {
+      &:not(:last-child) {
+        margin-right: 2rem !important;
+      }
+    }
+    &--y-item {
+      margin-top: 2rem !important;
+    }
+  }
+
+  &__text {
+    &--title {
+      font-size: $font-size-3 !important;
+      color: $color-gray-dark;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-6 !important;
+  }
+
+  &__input {
+    border: none !important;
+    font-size: $font-size-6 !important;
+    color: $color-gray-dark;
+    height: 4rem !important;
+    text-align: center;
+    outline: 0;
+
+    &--date-n-time {
+      width: 6rem !important;
+    }
+    &--location {
+      width: 18rem !important;
+      text-transform: capitalize;
+    }
+  }
+
+  &__textarea {
+    border: none !important;
+    font-size: $font-size-6 !important;
+    color: $color-gray-dark;
+    width: 100% !important;
+    height: 12rem !important;
+    padding: 1rem !important;
+    outline: 0;
+  }
+
+  &__select {
+    appearance: none;
+    border: none !important;
+    outline: 0;
+    width: 10rem !important;
+    font-size: $font-size-6 !important;
+    text-align-last: center;
+    padding: 1rem !important;
+    color: $color-gray-dark;
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    &--red {
+      color: red;
+    }
+    &--blue {
+      color: blue;
+    }
+    &--green {
+      color: lightgreen;
+    }
+    &--yellow {
+      color: yellow;
+    }
+    &--orange {
+      color: orange;
+    }
+    &--pink {
+      color: pink;
+    }
+    &--purple {
+      color: purple;
+    }
+  }
+
+  &__button {
+    border: none !important;
+    font-size: $font-size-4 !important;
+    width: 100% !important;
+    height: 6rem !important;
+    background-color: $color-green-light;
+    text-align: center;
+    color: $color-white;
+    font-weight: bold;
+    // outline: 0;
+  }
+}
