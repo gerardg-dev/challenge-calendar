@@ -1,4 +1,11 @@
 .home-page {
   &__container {
+    background-color: $color-gray-dark;
+    width: 100vw !important;
+    height: 100vh !important;
+    position: relative;
+    @include flexColumnCenter;
+    overflow-y: scroll;
+    padding: 0rem !important;
   }
 }

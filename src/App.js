@@ -11,11 +11,7 @@ console.log(store.getState());
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <AppContainer />
-        </header>
-      </div>
+      <AppContainer />
     </Provider>
   );
 }

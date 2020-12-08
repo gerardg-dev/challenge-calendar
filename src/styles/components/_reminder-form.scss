@@ -5,6 +5,7 @@
     padding: 2rem !important;
     background-color: $color-white-dark;
     color: $color-gray-dark;
+    max-width: 60rem !important;
 
     &--horizontal {
       @include flexRowCenter;
