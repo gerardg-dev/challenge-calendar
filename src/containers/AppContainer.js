@@ -12,6 +12,8 @@ import Modal from "../components/Modal";
 
 import { selectDay, createReminder, setActiveReminder } from "../actions";
 
+import { getWeather } from "../thunks/Weather";
+
 import "../styles/main.scss";
 
 class AppContainer extends React.Component {
@@ -147,11 +149,15 @@ class AppContainer extends React.Component {
                   this.props.remindersData[this.state.calendarValue.format("l")]
                 }
                 onSelectReminder={() => console.log("reminder chosen")}
-                onLookupReminder={(date, id) => {
+                onLookupReminder={async (date, id) => {
                   // console.log("onLookupReminder - Reminder Date and ID");
                   // console.log(date);
                   // console.log(id);
-                  this.props.setActiveReminder({ date, id });
+                  await this.props.setActiveReminder({ date, id });
+                  const activeReminderObj = await this.getActiveReminderObj();
+                  this.props.getWeather({
+                    cityName: activeReminderObj.city
+                  });
                   this.toggleShowSingleReminder();
                 }}
                 onUpdateReminder={(date, id) => {
@@ -226,21 +232,39 @@ class AppContainer extends React.Component {
             )}
           </Modal>
         )}
-        {this.state.showSingleReminder &&
-          this.props.activeReminder !== null && (
-            <SingleReminder
-              reminderObj={this.getActiveReminderObj()}
-              onClose={() => this.toggleShowSingleReminder()}
-            />
-          )}
+        {this.state.showSingleReminder && this.props.activeReminder !== null && (
+          <SingleReminder
+            isLoadingWeather={this.props.isLoadingWeather}
+            loadingWeatherError={this.props.setWeatherError}
+            // isLoadingWeather={true}
+            reminderObj={this.getActiveReminderObj()}
+            sevenDayForecast={this.props.activeReminderWeather}
+            onClose={() => this.toggleShowSingleReminder()}
+          />
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { selectedDay, remindersData, activeReminder } = state;
-  return { selectedDay, remindersData, activeReminder, state };
+  const {
+    selectedDay,
+    remindersData,
+    activeReminder,
+    activeReminderWeather,
+    setWeatherError,
+    isLoadingWeather
+  } = state;
+  return {
+    selectedDay,
+    remindersData,
+    activeReminder,
+    activeReminderWeather,
+    setWeatherError,
+    isLoadingWeather,
+    state
+  };
 };
 
 export default connect(
@@ -248,6 +272,8 @@ export default connect(
   {
     selectDay,
     createReminder,
-    setActiveReminder
+    setActiveReminder,
+    //
+    getWeather
   }
 )(AppContainer);

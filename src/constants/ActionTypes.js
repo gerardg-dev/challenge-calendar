@@ -1,6 +1,8 @@
 export const SELECT_DAY = "select_day";
 
-// export const SET_WEATHER = "set_weather";
+export const SET_WEATHER = "set_weather";
+export const SET_WEATHER_ERROR = "set_weather_error";
+export const IS_LOADING_WEATHER = "is_loading_weather";
 //
 export const CREATE_REMINDER = "create_reminder";
 export const SET_ACTIVE_REMINDER = "set_active_reminder";

@@ -1,7 +1,10 @@
 import {
   SELECT_DAY,
   CREATE_REMINDER,
-  SET_ACTIVE_REMINDER
+  SET_ACTIVE_REMINDER,
+  SET_WEATHER,
+  SET_WEATHER_ERROR,
+  IS_LOADING_WEATHER
 } from "../constants/ActionTypes";
 
 export const selectDay = day => {
@@ -24,5 +27,26 @@ export const setActiveReminder = payload => {
   return {
     type: SET_ACTIVE_REMINDER,
     payload: payload
+  };
+};
+
+export const setWeather = weatherObj => {
+  return {
+    type: SET_WEATHER,
+    payload: weatherObj
+  };
+};
+
+export const setWeatherError = errorObj => {
+  return {
+    type: SET_WEATHER_ERROR,
+    payload: errorObj
+  };
+};
+
+export const isLoadingWeather = bool => {
+  return {
+    type: IS_LOADING_WEATHER,
+    payload: bool
   };
 };

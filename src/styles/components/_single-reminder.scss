@@ -27,6 +27,9 @@
       width: 100%;
       max-width: 40rem !important;
       height: 12rem !important;
+      @include flexColumnCenter;
+      text-align: center;
+      line-height: 1;
     }
     &--reminder {
       // border: solid white 0.25rem !important;

@@ -11,9 +11,6 @@ const ReminderForm = ({
   minute,
   textarea,
   city,
-  state,
-  zipcode,
-  country,
   color,
   onReturnFormData
 }) => {
@@ -26,9 +23,6 @@ const ReminderForm = ({
     minute,
     textarea,
     city,
-    state,
-    zipcode,
-    country,
     color
   });
 
@@ -45,7 +39,7 @@ const ReminderForm = ({
   };
 
   const onSubmit = () => {
-    // console.log(formData);
+    console.log(formData);
     if (
       formData.day === undefined ||
       formData.month === undefined ||
@@ -54,9 +48,6 @@ const ReminderForm = ({
       formData.minute === undefined ||
       formData.textarea === undefined ||
       formData.city === undefined ||
-      formData.state === undefined ||
-      formData.zipcode === undefined ||
-      formData.country === undefined ||
       formData.color === undefined ||
       //
       formData.day.length === 0 ||
@@ -66,9 +57,6 @@ const ReminderForm = ({
       formData.minute.length === 0 ||
       formData.textarea.length === 0 ||
       formData.city.length === 0 ||
-      formData.state.length === 0 ||
-      formData.zipcode.length === 0 ||
-      formData.country.length === 0 ||
       formData.color.length === 0
     ) {
       alert("Please fill all the inputs.");
@@ -327,41 +315,6 @@ const ReminderForm = ({
             onChange={handleChange}
           />
         </div>
-        <div className="reminder-form-component__container--vertical">
-          <label htmlFor="state" className="reminder-form-component__label">
-            State
-          </label>
-          <input
-            name="state"
-            value={formData.state}
-            className="reminder-form-component__input reminder-form-component__input--location"
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <div className="reminder-form-component__container--horizontal reminder-form-component__container--y-item">
-        <div className="reminder-form-component__container--vertical reminder-form-component__container--x-item">
-          <label htmlFor="zipcode" className="reminder-form-component__label">
-            ZIP Code
-          </label>
-          <input
-            name="zipcode"
-            value={formData.zipcode}
-            className="reminder-form-component__input reminder-form-component__input--location"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="reminder-form-component__container--vertical">
-          <label htmlFor="country" className="reminder-form-component__label">
-            Country
-          </label>
-          <input
-            name="country"
-            value={formData.country}
-            className="reminder-form-component__input reminder-form-component__input--location"
-            onChange={handleChange}
-          />
-        </div>
       </div>
 
       <button
@@ -389,9 +342,6 @@ ReminderForm.defaultProps = {
   minute: "00",
   textarea: "",
   city: "",
-  state: "",
-  zipcode: "",
-  country: "",
   color: "orange",
   onReturnFormData: () => console.log("Returning Form Data to Parent")
 };
