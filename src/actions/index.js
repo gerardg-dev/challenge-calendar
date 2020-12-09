@@ -4,7 +4,10 @@ import {
   SET_ACTIVE_REMINDER,
   SET_WEATHER,
   SET_WEATHER_ERROR,
-  IS_LOADING_WEATHER
+  IS_LOADING_WEATHER,
+  UPDATE_REMINDER,
+  DELETE_REMINDER,
+  DELETE_ALL_REMINDERS_FOR_SPECIFIC_DAY
 } from "../constants/ActionTypes";
 
 export const selectDay = day => {
@@ -48,5 +51,24 @@ export const isLoadingWeather = bool => {
   return {
     type: IS_LOADING_WEATHER,
     payload: bool
+  };
+};
+
+export const updateReminder = payload => {
+  return {
+    type: UPDATE_REMINDER,
+    payload: payload
+  };
+};
+export const deleteReminder = payload => {
+  return {
+    type: DELETE_REMINDER,
+    payload: payload
+  };
+};
+export const deleteAllReminders = payload => {
+  return {
+    type: DELETE_ALL_REMINDERS_FOR_SPECIFIC_DAY,
+    payload: payload
   };
 };

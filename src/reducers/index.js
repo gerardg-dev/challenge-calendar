@@ -4,7 +4,10 @@ import {
   SET_ACTIVE_REMINDER,
   SET_WEATHER,
   SET_WEATHER_ERROR,
-  IS_LOADING_WEATHER
+  IS_LOADING_WEATHER,
+  UPDATE_REMINDER,
+  DELETE_REMINDER,
+  DELETE_ALL_REMINDERS_FOR_SPECIFIC_DAY
 } from "../constants/ActionTypes";
 
 const initialState = {
@@ -54,6 +57,25 @@ export default function remindersReducer(state = initialState, action) {
         isLoadingWeather: action.payload
       };
     }
+    case UPDATE_REMINDER: {
+      return {
+        ...state,
+        remindersData: action.payload
+      };
+    }
+    case DELETE_REMINDER: {
+      return {
+        ...state,
+        remindersData: action.payload
+      };
+    }
+    case DELETE_ALL_REMINDERS_FOR_SPECIFIC_DAY: {
+      return {
+        ...state,
+        remindersData: action.payload
+      };
+    }
+
     default:
       return state;
   }

@@ -6,6 +6,7 @@ export const IS_LOADING_WEATHER = "is_loading_weather";
 //
 export const CREATE_REMINDER = "create_reminder";
 export const SET_ACTIVE_REMINDER = "set_active_reminder";
-// export const UPDATE_REMINDER = "update_reminder";
-// export const DELETE_REMINDER = "delete_reminder";
-// export const DELETE_ALL_REMINDERS = "delete_all_reminders";
+export const UPDATE_REMINDER = "update_reminder";
+export const DELETE_REMINDER = "delete_reminder";
+export const DELETE_ALL_REMINDERS_FOR_SPECIFIC_DAY =
+  "delete_all_reminders_for_specific_day";

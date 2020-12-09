@@ -145,7 +145,7 @@ const Reminders = ({
       {remindersData.length > 0 && (
         <div
           className="reminders-component__button--delete-all"
-          onClick={onDeleteAllReminders}
+          onClick={onDeleteAllReminders(date)}
         >
           DELETE ALL REMINDERS FOR THIS DAY
         </div>

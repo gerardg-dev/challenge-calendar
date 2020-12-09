@@ -26,7 +26,8 @@ class AppContainer extends React.Component {
     showModal: false,
     showCreateReminderForm: false,
     showReminders: false,
-    showSingleReminder: false
+    showSingleReminder: false,
+    showUpdateReminder: false
   };
 
   async componentDidMount() {
@@ -58,6 +59,12 @@ class AppContainer extends React.Component {
     });
   };
 
+  toggleShowUpdateReminder = () => {
+    this.setState({
+      showUpdateReminder: this.state.showUpdateReminder === true ? false : true
+    });
+  };
+
   hideAll = () => {
     this.setState({
       ...this.state,
@@ -65,7 +72,8 @@ class AppContainer extends React.Component {
         showModal: false,
         showCreateReminderForm: false,
         showReminders: false,
-        showSingleReminder: false
+        showSingleReminder: false,
+        showUpdateReminder: false
       }
     });
   };
@@ -118,6 +126,7 @@ class AppContainer extends React.Component {
             this.props.selectDay(value);
             // console.log(this.props.state);
           }}
+          remindersData={this.props.remindersData}
         />
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div
@@ -150,9 +159,6 @@ class AppContainer extends React.Component {
                 }
                 onSelectReminder={() => console.log("reminder chosen")}
                 onLookupReminder={async (date, id) => {
-                  // console.log("onLookupReminder - Reminder Date and ID");
-                  // console.log(date);
-                  // console.log(id);
                   await this.props.setActiveReminder({ date, id });
                   const activeReminderObj = await this.getActiveReminderObj();
                   this.props.getWeather({
@@ -160,17 +166,24 @@ class AppContainer extends React.Component {
                   });
                   this.toggleShowSingleReminder();
                 }}
-                onUpdateReminder={(date, id) => {
-                  // console.log("onUpdateReminder - Reminder Date and ID");
-                  // console.log(date);
-                  // console.log(id);
+                onUpdateReminder={async (date, id) => {
+                  console.log("onUpdateReminder");
                   this.props.setActiveReminder({ date, id });
+                  const activeReminderObj = await this.getActiveReminderObj();
+                  this.toggleShowUpdateReminder();
                 }}
-                onDeleteReminder={(date, id) => {
-                  // console.log("onDeleteReminder - Reminder Date and ID");
-                  // console.log(date);
-                  // console.log(id);
+                onDeleteReminder={async (date, id) => {
                   this.props.setActiveReminder({ date, id });
+                  if (
+                    window.confirm(
+                      "ARE YOU SURE YOU WANT TO DELETE THIS REMINDER?"
+                    )
+                  ) {
+                    // let remindersData = this.props.remindersData;
+                  }
+                }}
+                onDeleteAllReminders={date => {
+                  console.log("Delete all reminders for a specific date");
                 }}
               />
             )}
@@ -180,14 +193,6 @@ class AppContainer extends React.Component {
                 day={this.props.selectedDay.get("date")}
                 month={this.props.selectedDay.month() + 1}
                 year={this.props.selectedDay.year()}
-                // hour="11"
-                // minute="11"
-                // textarea="Love is in the air"
-                // city="Paris"
-                // state="Paris"
-                // zipcode=""
-                // country="France"
-                // color="pink"
                 onReturnFormData={formData => {
                   // alert(JSON.stringify(formData, null, 4));
 
@@ -232,15 +237,89 @@ class AppContainer extends React.Component {
             )}
           </Modal>
         )}
-        {this.state.showSingleReminder && this.props.activeReminder !== null && (
-          <SingleReminder
-            isLoadingWeather={this.props.isLoadingWeather}
-            loadingWeatherError={this.props.setWeatherError}
-            // isLoadingWeather={true}
-            reminderObj={this.getActiveReminderObj()}
-            sevenDayForecast={this.props.activeReminderWeather}
-            onClose={() => this.toggleShowSingleReminder()}
-          />
+        {this.state.showSingleReminder &&
+          this.props.activeReminder !== null && (
+            <SingleReminder
+              isLoadingWeather={this.props.isLoadingWeather}
+              loadingWeatherError={this.props.setWeatherError}
+              reminderObj={this.getActiveReminderObj()}
+              sevenDayForecast={this.props.activeReminderWeather}
+              onClose={() => this.toggleShowSingleReminder()}
+            />
+          )}
+        {this.state.showUpdateReminder && this.props.activeReminder !== null && (
+          <div
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              zIndex: 2000
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <ReminderForm
+                formTitle="UPDATE REMINDER"
+                day={this.getActiveReminderObj().day}
+                month={this.getActiveReminderObj().month}
+                year={this.getActiveReminderObj().year}
+                hour={this.getActiveReminderObj().hour}
+                minute={this.getActiveReminderObj().minute}
+                textarea={this.getActiveReminderObj().textarea}
+                city={this.getActiveReminderObj().city}
+                color={this.getActiveReminderObj().color}
+                onReturnFormData={formData => {
+                  const date = `${formData.month}/${formData.day}/${formData.year}`;
+
+                  const reminderObject = {
+                    ...{
+                      // id: uuidv4(),
+                      date
+                    },
+                    ...formData
+                  };
+
+                  const remindersData = this.props.remindersData;
+
+                  let remindersForThisDate = {};
+
+                  if (remindersData && remindersData[date]) {
+                    // key 'date' already exists in the remindersData object
+                    // grab existing data and push new reminder object
+                    // key 'date' is an array of objects (reminderObjects)
+                    remindersForThisDate = {
+                      [date]: [...remindersData[date], ...[reminderObject]]
+                    };
+                  } else {
+                    // key 'date' does not exist in the remindersData object
+                    // create new key 'date' and add this object
+                    // key 'date' is an array of objects (reminderObjects)
+                    remindersForThisDate = {
+                      [date]: [...[reminderObject]]
+                    };
+                  }
+
+                  this.props.createReminder({
+                    ...remindersData,
+                    ...remindersForThisDate
+                  });
+
+                  this.hideAll();
+                }}
+              />
+            </div>
+          </div>
         )}
       </div>
     );

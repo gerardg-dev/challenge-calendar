@@ -1,6 +1,7 @@
 import "../../styles/main.scss";
+import ListIcon from "@material-ui/icons/List";
 
-const Body = ({ onChange, calendar, dayStyles, value }) => {
+const Body = ({ onChange, calendar, dayStyles, value, remindersData }) => {
   return (
     <div className="calendar-component__body">
       {calendar.map((week, weekIndex) => (
@@ -15,6 +16,20 @@ const Body = ({ onChange, calendar, dayStyles, value }) => {
             >
               <div className={dayStyles(day, value)}>
                 {day.format("D").toString()}
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    transform: "translate(-50%, 0)",
+                    backgroundColor: "orange",
+                    width: "30px",
+                    borderRadius: "1000px"
+                  }}
+                >
+                  {remindersData && remindersData[day.format("l")] && (
+                    <ListIcon fontSize="large" />
+                  )}
+                </div>
               </div>
             </div>
           ))}
