@@ -1,0 +1,68 @@
+*,
+*::after,
+*::before {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: inherit !important;
+}
+
+html {
+  font-size: 62.5% !important; //1 rem = 10px; 10px/16px = 62.5%
+
+  @include respond(phone) {
+  }
+
+  @include respond(tab-port) {
+    // width < 900?
+    font-size: 50% !important; //1 rem = 8px, 8/16 = 50%
+  }
+
+  @include respond(tab-land) {
+    // width < 1200?
+    font-size: 56.25% !important; //1 rem = 9px, 9/16 = 50%
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75% !important; //1rem = 12, 12/16
+  }
+}
+
+body {
+  box-sizing: border-box !important;
+  font-family: Verdana, Geneva, sans-serif !important;
+  font-weight: 400 !important;
+  line-height: 1.7 !important;
+  color: $color-white !important;
+
+  @include respond(tab-port) {
+    // padding: 0rem !important;
+  }
+}
+
+div {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 20px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+    width: 90%;
+    height: 90%;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0);
+    width: 90%;
+    height: 90%;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0);
+  }
+}

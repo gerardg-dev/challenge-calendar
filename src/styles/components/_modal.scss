@@ -1,0 +1,29 @@
+.modal-component {
+  &__container {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow-y: scroll;
+
+    &--content {
+      @include flexColumnCenter;
+      vertical-align: top !important;
+      padding-top: 2rem !important;
+    }
+
+    &--close {
+      width: 100%;
+      height: 6rem !important;
+      @include flexColumnCenter;
+      background-color: red;
+      color: $color-white;
+      font-size: $font-size-6 !important;
+      font-weight: bold;
+      margin-top: 2rem !important;
+    }
+  }
+}

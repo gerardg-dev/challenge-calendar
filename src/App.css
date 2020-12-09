@@ -1,5 +1,7 @@
 .App {
+  border: solid blue 0.25rem !important;
   text-align: center;
+  padding: 0rem !important;
 }
 
 .App-logo {
@@ -14,6 +16,7 @@
 }
 
 .App-header {
+  border: solid orange 0.25rem !important;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,6 +25,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 0rem !important;
 }
 
 .App-link {

@@ -1,0 +1,65 @@
+.calendar-component {
+  &__container {
+    border: solid 0.75rem $color-gray-light !important;
+    width: 100%;
+    min-width: 20rem !important;
+    max-width: 60rem !important;
+    margin: 1rem !important;
+    padding: 0 !important;
+  }
+
+  &__header {
+    @include flexRowSpaceAround;
+    background-color: $color-gray-light;
+    height: 6rem !important;
+    color: $color-white;
+    font-size: $font-size-3 !important;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  &__days-letter {
+    @include flexRowSpaceAround;
+    background-color: $color-light-blue;
+    height: 4rem !important;
+    color: $color-white;
+    font-size: $font-size-5 !important;
+    font-weight: bold;
+  }
+
+  &__body {
+  }
+
+  &__week-box {
+    color: $color-gray;
+    font-size: $font-size-6 !important;
+  }
+
+  &__day-box {
+    border: solid 0.05rem $color-white-dark !important;
+    position: relative;
+    width: calc(100% / 7);
+    height: 8rem !important;
+    display: inline-block;
+    background-color: $color-white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    text-align: center;
+    color: $color-gray;
+
+    &--before-today {
+      background-color: $color-white;
+      color: $color-gray-light;
+    }
+    &--is-selected {
+      background-color: $color-red-light;
+      color: $color-white;
+    }
+    &--is-today {
+      background-color: $color-blue-light;
+      color: $color-white;
+    }
+  }
+}
