@@ -14,6 +14,8 @@ import { selectDay, createReminder, setActiveReminder } from "../actions";
 
 import { getWeather } from "../thunks/Weather";
 
+import { removeObjectbyKeyNameAndValue } from "../util/arrHelpers";
+
 import "../styles/main.scss";
 
 class AppContainer extends React.Component {
@@ -99,26 +101,27 @@ class AppContainer extends React.Component {
     return obj;
   };
 
+  deleteReminder = async (date, id) => {
+    let remindersData = this.props.remindersData;
+    let allRemindersForThisDate = remindersData[date];
+
+    const dateRemindersAfterRemovedReminder = removeObjectbyKeyNameAndValue(
+      allRemindersForThisDate,
+      "id",
+      id
+    );
+
+    await this.props.createReminder({
+      ...remindersData,
+      ...{
+        [date]: [...dateRemindersAfterRemovedReminder]
+      }
+    });
+  };
+
   render() {
     return (
       <div className="home-page__container">
-        {/* moment.js library demo
-        {this.props.selectedDay !== null && (
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <p>{this.props.selectedDay.format("l")}</p>
-            {" - "}
-            <p>{this.props.selectedDay.month() + 1}</p>
-            {" / "}
-            <p>{this.props.selectedDay.get("date")}</p>
-            {" / "}
-            <p>{this.props.selectedDay.year()}</p>
-            {" - "}
-            <p>{moment().hour()}</p>
-            {":"}
-            <p>{moment().minute()}</p>
-          </div>
-        )}
-        */}
         <Calendar
           value={this.state.calendarValue}
           onChange={value => {
@@ -127,18 +130,12 @@ class AppContainer extends React.Component {
             // console.log(this.props.state);
           }}
           remindersData={this.props.remindersData}
+          onClickRemindersList={day => {
+            this.toggleShowModal();
+            this.toggleShowReminders();
+          }}
         />
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            className="btn-1-component__container"
-            onClick={() => {
-              this.toggleShowModal();
-              this.toggleShowReminders();
-            }}
-          >
-            REMINDERS FOR {this.state.calendarValue.format("l")}
-          </div>
-          <div style={{ width: "10px" }} />
           <div
             className="btn-1-component__container"
             onClick={() => {
@@ -146,7 +143,7 @@ class AppContainer extends React.Component {
               this.toggleShowReminderForm();
             }}
           >
-            CREATE REMINDER
+            {"+ CREATE REMINDER"}
           </div>
         </div>
         {this.state.showModal && (
@@ -167,9 +164,7 @@ class AppContainer extends React.Component {
                   this.toggleShowSingleReminder();
                 }}
                 onUpdateReminder={async (date, id) => {
-                  console.log("onUpdateReminder");
-                  this.props.setActiveReminder({ date, id });
-                  const activeReminderObj = await this.getActiveReminderObj();
+                  await this.props.setActiveReminder({ date, id });
                   this.toggleShowUpdateReminder();
                 }}
                 onDeleteReminder={async (date, id) => {
@@ -179,11 +174,31 @@ class AppContainer extends React.Component {
                       "ARE YOU SURE YOU WANT TO DELETE THIS REMINDER?"
                     )
                   ) {
-                    // let remindersData = this.props.remindersData;
+                    this.deleteReminder(date, id);
                   }
                 }}
                 onDeleteAllReminders={date => {
-                  console.log("Delete all reminders for a specific date");
+                  if (
+                    window.confirm(
+                      "ARE YOU SURE YOU WANT TO DELETE ALL REMINDERS FOR THIS SPECIFIC DATE?"
+                    )
+                  ) {
+                    let remindersData = this.props.remindersData;
+
+                    const notAllowed = [date.toString()];
+                    const filtered = Object.keys(remindersData)
+                      .filter(key => !notAllowed.includes(key))
+                      .reduce((obj, key) => {
+                        return {
+                          ...obj,
+                          [key]: remindersData[key]
+                        };
+                      }, {});
+
+                    this.props.createReminder({
+                      ...filtered
+                    });
+                  }
                 }}
               />
             )}
@@ -279,12 +294,14 @@ class AppContainer extends React.Component {
                 textarea={this.getActiveReminderObj().textarea}
                 city={this.getActiveReminderObj().city}
                 color={this.getActiveReminderObj().color}
-                onReturnFormData={formData => {
+                onReturnFormData={async formData => {
+                  const activeReminderObj = await this.getActiveReminderObj();
+
                   const date = `${formData.month}/${formData.day}/${formData.year}`;
 
                   const reminderObject = {
                     ...{
-                      // id: uuidv4(),
+                      id: activeReminderObj.id,
                       date
                     },
                     ...formData
@@ -316,8 +333,19 @@ class AppContainer extends React.Component {
                   });
 
                   this.hideAll();
+
+                  this.deleteReminder(
+                    activeReminderObj.date,
+                    activeReminderObj.id
+                  );
                 }}
               />
+              <div
+                className="modal-component__container--close"
+                onClick={() => this.toggleShowUpdateReminder()}
+              >
+                CLOSE
+              </div>
             </div>
           </div>
         )}

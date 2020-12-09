@@ -20,40 +20,36 @@ const SingleReminder = ({
     sevenDayForecast === null ||
     sevenDayForecast.length === 0
   ) {
-    reminderForecast = "Forcast not available for this day";
+    reminderForecast = "Forcast not available.";
+  } else {
+    const getDaysDiff = () => {
+      let todayYear = moment().year();
+      let todayMonth = moment().month() + 1;
+      let todayDayNum = moment().get("date");
+
+      let reminderYear = reminderObj.year;
+      let reminderMonth = reminderObj.month;
+      let reminderDayNum = reminderObj.day;
+
+      var startDate = moment(
+        `${todayDayNum}.${todayMonth}.${todayYear}`,
+        "DD.MM.YYYY"
+      );
+      var endDate = moment(
+        `${reminderDayNum}.${reminderMonth}.${reminderYear}`,
+        "DD.MM.YYYY"
+      );
+      var result = endDate.diff(startDate, "days");
+      return result;
+    };
+    const daysDiff = getDaysDiff();
+
+    if (daysDiff >= 0 && daysDiff <= 7) {
+      reminderForecast = sevenDayForecast[daysDiff].weather[0].main;
+    } else {
+      reminderForecast = "Forcast not available for this day.";
+    }
   }
-
-  const getDaysDiff = () => {
-    let todayYear = moment().year();
-    let todayMonth = moment().month() + 1;
-    let todayDayNum = moment().get("date");
-
-    let reminderYear = reminderObj.year;
-    let reminderMonth = reminderObj.month;
-    let reminderDayNum = reminderObj.day;
-
-    console.log(todayYear);
-    console.log(todayMonth);
-    console.log(todayDayNum);
-
-    console.log(reminderYear);
-    console.log(reminderMonth);
-    console.log(reminderDayNum);
-
-    let a = moment([
-      parseInt(reminderYear),
-      parseInt(reminderMonth),
-      parseInt(reminderDayNum)
-    ]);
-    let b = moment([
-      parseInt(todayYear),
-      parseInt(todayMonth),
-      parseInt(todayDayNum)
-    ]);
-    console.log(a.diff(b, "days"));
-  };
-  console.log("Days Diff");
-  console.log(getDaysDiff);
 
   return (
     <div className="single-reminder-component__container">

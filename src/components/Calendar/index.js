@@ -7,7 +7,7 @@ import Body from "./Body";
 
 import "../../styles/main.scss";
 
-const Calendar = ({ value, onChange, remindersData }) => {
+const Calendar = ({ value, onChange, remindersData, onClickRemindersList }) => {
   const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const Calendar = ({ value, onChange, remindersData }) => {
         dayStyles={dayStyles}
         value={value}
         remindersData={remindersData}
+        onClickRemindersList={onClickRemindersList}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 .calendar-component {
   &__container {
-    border: solid 0.75rem $color-gray-light !important;
+    border: solid 1rem $color-gray-light !important;
+    border-radius: 2rem !important;
     width: 100%;
     min-width: 20rem !important;
     max-width: 60rem !important;
@@ -13,7 +14,7 @@
     background-color: $color-gray-light;
     height: 6rem !important;
     color: $color-white;
-    font-size: $font-size-3 !important;
+    font-size: $font-size-4 !important;
     text-transform: uppercase;
     line-height: 1;
   }
@@ -52,14 +53,17 @@
     &--before-today {
       background-color: $color-white;
       color: $color-gray-light;
+      border-radius: 1rem !important;
     }
     &--is-selected {
       background-color: $color-red-light;
       color: $color-white;
+      border-radius: 1rem !important;
     }
     &--is-today {
-      background-color: $color-blue-light;
+      background-color: $color-gray-light;
       color: $color-white;
+      border-radius: 1rem !important;
     }
   }
 }
