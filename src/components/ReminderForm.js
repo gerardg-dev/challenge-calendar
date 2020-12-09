@@ -290,6 +290,7 @@ const ReminderForm = ({
           value={formData.textarea}
           className="reminder-form-component__textarea"
           onChange={handleChange}
+          maxLength="30"
         ></textarea>
       </div>
 

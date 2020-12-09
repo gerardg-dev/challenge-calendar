@@ -6,9 +6,11 @@ import { v4 as uuidv4 } from "uuid";
 
 import Calendar from "../components/Calendar/index.js";
 import ReminderForm from "../components/ReminderForm";
+import Reminders from "../components/Reminders";
+import SingleReminder from "../components/SingleReminder";
 import Modal from "../components/Modal";
 
-import { selectDay, createReminder } from "../actions";
+import { selectDay, createReminder, setActiveReminder } from "../actions";
 
 import "../styles/main.scss";
 
@@ -20,23 +22,37 @@ class AppContainer extends React.Component {
   state = {
     calendarValue: moment(),
     showModal: false,
-    showCreateReminderForm: false
+    showCreateReminderForm: false,
+    showReminders: false,
+    showSingleReminder: false
   };
 
-  componentDidMount() {
-    this.props.selectDay(this.state.calendarValue);
+  async componentDidMount() {
+    await this.props.selectDay(moment());
   }
 
-  toggleShouldShowModal = () => {
+  toggleShowModal = () => {
     this.setState({
       showModal: this.state.showModal === true ? false : true
     });
   };
 
-  toggleShouldShowReminderForm = () => {
+  toggleShowReminderForm = () => {
     this.setState({
       showCreateReminderForm:
         this.state.showCreateReminderForm === true ? false : true
+    });
+  };
+
+  toggleShowReminders = () => {
+    this.setState({
+      showReminders: this.state.showReminders === true ? false : true
+    });
+  };
+
+  toggleShowSingleReminder = () => {
+    this.setState({
+      showSingleReminder: this.state.showSingleReminder === true ? false : true
     });
   };
 
@@ -45,15 +61,38 @@ class AppContainer extends React.Component {
       ...this.state,
       ...{
         showModal: false,
-        showCreateReminderForm: false
+        showCreateReminderForm: false,
+        showReminders: false,
+        showSingleReminder: false
       }
     });
+  };
+
+  getActiveReminderObj = () => {
+    if (
+      this.props.activeReminder === undefined ||
+      this.props.activeReminder === null
+    ) {
+      return null;
+    }
+
+    const { date, id } = this.props.activeReminder;
+
+    if (this.props.remindersData[date] === undefined) {
+      return null;
+    }
+
+    const dateReminders = this.props.remindersData[date];
+
+    let obj = dateReminders.find(o => o.id.toString() === id.toString());
+
+    return obj;
   };
 
   render() {
     return (
       <div className="home-page__container">
-        {/* moment.js library demo */}
+        {/* moment.js library demo
         {this.props.selectedDay !== null && (
           <div style={{ display: "flex", flexDirection: "row" }}>
             <p>{this.props.selectedDay.format("l")}</p>
@@ -69,6 +108,7 @@ class AppContainer extends React.Component {
             <p>{moment().minute()}</p>
           </div>
         )}
+        */}
         <Calendar
           value={this.state.calendarValue}
           onChange={value => {
@@ -77,17 +117,57 @@ class AppContainer extends React.Component {
             // console.log(this.props.state);
           }}
         />
-        <div
-          className="btn-1-component__container"
-          onClick={() => {
-            this.toggleShouldShowModal();
-            this.toggleShouldShowReminderForm();
-          }}
-        >
-          CREATE REMINDER
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            className="btn-1-component__container"
+            onClick={() => {
+              this.toggleShowModal();
+              this.toggleShowReminders();
+            }}
+          >
+            REMINDERS FOR {this.state.calendarValue.format("l")}
+          </div>
+          <div style={{ width: "10px" }} />
+          <div
+            className="btn-1-component__container"
+            onClick={() => {
+              this.toggleShowModal();
+              this.toggleShowReminderForm();
+            }}
+          >
+            CREATE REMINDER
+          </div>
         </div>
         {this.state.showModal && (
           <Modal onClose={() => this.hideAll()}>
+            {this.state.showReminders && (
+              <Reminders
+                date={this.state.calendarValue.format("l")}
+                remindersData={
+                  this.props.remindersData[this.state.calendarValue.format("l")]
+                }
+                onSelectReminder={() => console.log("reminder chosen")}
+                onLookupReminder={(date, id) => {
+                  // console.log("onLookupReminder - Reminder Date and ID");
+                  // console.log(date);
+                  // console.log(id);
+                  this.props.setActiveReminder({ date, id });
+                  this.toggleShowSingleReminder();
+                }}
+                onUpdateReminder={(date, id) => {
+                  // console.log("onUpdateReminder - Reminder Date and ID");
+                  // console.log(date);
+                  // console.log(id);
+                  this.props.setActiveReminder({ date, id });
+                }}
+                onDeleteReminder={(date, id) => {
+                  // console.log("onDeleteReminder - Reminder Date and ID");
+                  // console.log(date);
+                  // console.log(id);
+                  this.props.setActiveReminder({ date, id });
+                }}
+              />
+            )}
             {this.state.showCreateReminderForm && (
               <ReminderForm
                 formTitle="CREATE REMINDER"
@@ -146,20 +226,28 @@ class AppContainer extends React.Component {
             )}
           </Modal>
         )}
+        {this.state.showSingleReminder &&
+          this.props.activeReminder !== null && (
+            <SingleReminder
+              reminderObj={this.getActiveReminderObj()}
+              onClose={() => this.toggleShowSingleReminder()}
+            />
+          )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { selectedDay, remindersData } = state;
-  return { selectedDay, remindersData, state };
+  const { selectedDay, remindersData, activeReminder } = state;
+  return { selectedDay, remindersData, activeReminder, state };
 };
 
 export default connect(
   mapStateToProps,
   {
     selectDay,
-    createReminder
+    createReminder,
+    setActiveReminder
   }
 )(AppContainer);

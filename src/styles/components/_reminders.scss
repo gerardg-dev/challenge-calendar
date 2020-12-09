@@ -1,0 +1,110 @@
+.reminders-component {
+  &__container {
+    // border: solid 0.25rem $color-gray-dark !important;
+    background-color: $color-white-dark;
+    font-size: $font-size-4 !important;
+    padding: 2rem !important;
+    color: $color-gray-dark;
+    width: 100%;
+    max-width: 60rem !important;
+    text-align: center;
+
+    &--hours {
+      // border: solid black 0.25rem !important;
+      border-radius: 1rem !important;
+      background-color: $color-white-light;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0.5rem !important;
+
+      &:not(:first-child) {
+        margin-top: 1rem !important;
+      }
+    }
+    &--hr {
+      // border: solid blue 0.25rem !important;
+      @include flexRowCenter;
+      color: $color-light-blue-dark;
+      font-size: $font-size-6 !important;
+      padding: 0.5rem !important;
+    }
+    &--reminders {
+      // border: solid red 0.25rem !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100% !important;
+      // height: 100% !important;
+      margin-left: 0.5rem !important;
+    }
+    &--single-reminder {
+      border: solid $color-light-blue-dark 0.25rem !important;
+      border-radius: 1rem !important;
+      background-color: $color-white-light;
+      font-size: $font-size-6 !important;
+      width: 100% !important;
+      padding: 1rem !important;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem !important;
+      }
+    }
+    &--single-reminder-content {
+      // border: solid red 0.25rem !important;
+      @include flexRowCenter;
+      justify-content: flex-start;
+      line-height: 1;
+      overflow-wrap: break-word !important;
+      margin: 1rem !important;
+    }
+    &--single-reminder-opts {
+      @include flexRowCenter;
+      justify-content: flex-end;
+    }
+  }
+
+  &__text {
+    &--title {
+      color: $color-gray-dark;
+      font-size: $font-size-4 !important;
+      margin-bottom: 2rem !important;
+    }
+    &--subtitle {
+      color: $color-light-blue-dark;
+      font-size: $font-size-6 !important;
+      margin-bottom: 2rem !important;
+    }
+  }
+
+  &__button {
+    &--delete-all {
+      margin-top: 2rem !important;
+      color: $color-white;
+      background-color: $color-red-dark;
+      font-size: $font-size-5;
+      border-radius: 1rem !important;
+      padding: 1rem !important;
+    }
+    &--lookup-reminder {
+      color: $color-gray-dark;
+      font-size: $font-size-4 !important;
+      @include flexColumnCenter;
+      margin-left: 1rem !important;
+    }
+    &--update-reminder {
+      color: $color-gray-dark;
+      font-size: $font-size-4 !important;
+      @include flexColumnCenter;
+      margin-left: 1rem !important;
+    }
+    &--delete-reminder {
+      color: $color-gray-dark;
+      font-size: $font-size-4 !important;
+      @include flexColumnCenter;
+      margin-left: 1rem !important;
+    }
+  }
+}
