@@ -1,6 +1,7 @@
 .reminder-form-component {
   &__container {
     border: solid 0.25rem $color-gray-dark !important;
+    border-radius: 2rem !important;
     font-size: $font-size-4 !important;
     padding: 2rem !important;
     background-color: $color-white-dark;
@@ -42,6 +43,7 @@
     height: 4rem !important;
     text-align: center;
     outline: 0;
+    border-radius: 1rem !important;
 
     &--date-n-time {
       width: 6rem !important;
@@ -54,12 +56,13 @@
 
   &__textarea {
     border: none !important;
-    font-size: $font-size-6 !important;
+    font-size: $font-size-5 !important;
     color: $color-gray-dark;
     width: 100% !important;
     height: 12rem !important;
     padding: 1rem !important;
     outline: 0;
+    border-radius: 1rem !important;
   }
 
   &__select {
@@ -71,6 +74,7 @@
     text-align-last: center;
     padding: 1rem !important;
     color: $color-gray-dark;
+    border-radius: 1rem !important;
 
     &::-ms-expand {
       display: none;
@@ -104,10 +108,11 @@
     font-size: $font-size-4 !important;
     width: 100% !important;
     height: 6rem !important;
-    background-color: $color-green-light;
+    background-color: lightgreen;
     text-align: center;
     color: $color-white;
     font-weight: bold;
+    border-radius: 1rem !important;
     // outline: 0;
   }
 }

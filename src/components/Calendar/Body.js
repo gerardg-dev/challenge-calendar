@@ -1,7 +1,14 @@
 import "../../styles/main.scss";
 import ListIcon from "@material-ui/icons/List";
 
-const Body = ({ onChange, calendar, dayStyles, value, remindersData }) => {
+const Body = ({
+  onChange,
+  calendar,
+  dayStyles,
+  value,
+  remindersData,
+  onClickRemindersList
+}) => {
   return (
     <div className="calendar-component__body">
       {calendar.map((week, weekIndex) => (
@@ -24,6 +31,10 @@ const Body = ({ onChange, calendar, dayStyles, value, remindersData }) => {
                     backgroundColor: "orange",
                     width: "30px",
                     borderRadius: "1000px"
+                  }}
+                  onClick={() => {
+                    console.log("onClick date reminders");
+                    onClickRemindersList(day);
                   }}
                 >
                   {remindersData &&

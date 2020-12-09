@@ -130,18 +130,12 @@ class AppContainer extends React.Component {
             // console.log(this.props.state);
           }}
           remindersData={this.props.remindersData}
+          onClickRemindersList={day => {
+            this.toggleShowModal();
+            this.toggleShowReminders();
+          }}
         />
         <div style={{ display: "flex", flexDirection: "row" }}>
-          <div
-            className="btn-1-component__container"
-            onClick={() => {
-              this.toggleShowModal();
-              this.toggleShowReminders();
-            }}
-          >
-            REMINDERS FOR {this.state.calendarValue.format("l")}
-          </div>
-          <div style={{ width: "10px" }} />
           <div
             className="btn-1-component__container"
             onClick={() => {
@@ -149,7 +143,7 @@ class AppContainer extends React.Component {
               this.toggleShowReminderForm();
             }}
           >
-            CREATE REMINDER
+            {"+ CREATE REMINDER"}
           </div>
         </div>
         {this.state.showModal && (
@@ -347,12 +341,7 @@ class AppContainer extends React.Component {
                 }}
               />
               <div
-                style={{
-                  color: "white",
-                  backgroundColor: "red",
-                  width: "100%",
-                  height: "40px"
-                }}
+                className="modal-component__container--close"
                 onClick={() => this.toggleShowUpdateReminder()}
               >
                 CLOSE
