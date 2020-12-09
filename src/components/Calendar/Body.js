@@ -26,9 +26,11 @@ const Body = ({ onChange, calendar, dayStyles, value, remindersData }) => {
                     borderRadius: "1000px"
                   }}
                 >
-                  {remindersData && remindersData[day.format("l")] && (
-                    <ListIcon fontSize="large" />
-                  )}
+                  {remindersData &&
+                    remindersData[day.format("l")] &&
+                    remindersData[day.format("l")].length > 0 && (
+                      <ListIcon fontSize="large" />
+                    )}
                 </div>
               </div>
             </div>
