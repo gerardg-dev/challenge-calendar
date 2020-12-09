@@ -346,6 +346,17 @@ class AppContainer extends React.Component {
                   );
                 }}
               />
+              <div
+                style={{
+                  color: "white",
+                  backgroundColor: "red",
+                  width: "100%",
+                  height: "40px"
+                }}
+                onClick={() => this.toggleShowUpdateReminder()}
+              >
+                CLOSE
+              </div>
             </div>
           </div>
         )}
